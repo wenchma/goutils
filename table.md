@@ -5,7 +5,7 @@
 
 ### Print table
 
-```
+```bash
 import "github.com/wenchma/goutils"
 
 table := gotuils.NewTable([]string{"Id", "Name"})
@@ -16,7 +16,7 @@ table.Print()
 
 ### Output
 
-```
+```bash
 +-----+------------+
 | Id  | Name       |
 +-----+------------+
