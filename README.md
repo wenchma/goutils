@@ -13,4 +13,4 @@ fmt.Println(Colorize("Default", ""))
 
 **Output example**:
 
-![colorize print](./image/color-print.jpg)
+![](./images/color-print.jpg)
