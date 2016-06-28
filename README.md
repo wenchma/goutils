@@ -1,6 +1,10 @@
 # Utils for Golang
 
 
+## Usage for table
+
+[table usage](./table.md)
+
 ## Usage for Colorize
 
 ```bash
