@@ -1,9 +1,13 @@
 package goutils
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
+	"reflect"
 	"testing"
 )
 
@@ -26,7 +30,7 @@ func MockResponse(code int, body string) (*httptest.Server, *http.Client) {
 func TestSuccess(t *testing.T) {
 	server, client := MockResponse(200, `{"upstream_url":"http:\/\/mock.url.for.path.mapper","id":"92e6a0fc-a962-4497-828a-95a9463e983","name":"wenchma.stage1.example.net","created_at":1464845908000,"request_host":"wenchma.stage1.example.net"}`)
 	defer server.Close()
-	req, _ = http.NewRequest("GET", "http://example.net"+path, nil)
+	req, _ := http.NewRequest("GET", "http://example.net", nil)
 	resp, _ := client.Do(req)
 	defer resp.Body.Close()
 
