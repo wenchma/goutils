@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/wenchma/goutils.svg?branch=master)](https://travis-ci.org/wenchma/goutils)
+
 # Utils for Golang
 
 
