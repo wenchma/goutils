@@ -16,4 +16,3 @@ func Colorize(text string, status string) string {
 	}
 	return out + text + "\033[0m"
 }
-
