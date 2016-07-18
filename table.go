@@ -1,7 +1,7 @@
 package goutils
 
 import (
-    "fmt"
+	"fmt"
 )
 
 type Table struct {
@@ -30,7 +30,7 @@ func (t *Table) AddRow(row map[string]interface{}) {
 		if v == nil {
 			val = ""
 		} else {
-            val = fmt.Sprintf("%v", v)
+			val = fmt.Sprintf("%v", v)
 		}
 
 		newRow[k] = val
@@ -107,4 +107,3 @@ func (t *Table) calculateSizes(row map[string]string) {
 		}
 	}
 }
-
