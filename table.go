@@ -12,11 +12,16 @@ type Table struct {
 
 // NewTable - Creates a new table.
 func NewTable(fields []string) *Table {
-	return &Table{
+	t := &Table{
 		Fields:     fields,
 		Rows:       make([]map[string]string, 0),
 		fieldSizes: make(map[string]int),
 	}
+	// init table field size
+	for _, f := range fields {
+		t.fieldSizes[f] = len(f) + 2
+	}
+	return t
 }
 
 // AddRow - Adds table row.
@@ -97,10 +102,6 @@ func (t *Table) calculateSizes(row map[string]string) {
 		}
 
 		vlen := len(v)
-		// align to field name length
-		if klen := len(k); vlen < klen {
-			vlen = klen
-		}
 		vlen += 2 // + 2 spaces
 		if t.fieldSizes[k] < vlen {
 			t.fieldSizes[k] = vlen

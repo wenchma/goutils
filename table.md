@@ -9,6 +9,7 @@
 import "github.com/wenchma/goutils"
 
 table := gotuils.NewTable([]string{"Id", "Name"})
+table.Print()
 table.AddRow(map[string]interface{}{"Id": "100", "Name": "Mars"})
 table.AddRow(map[string]interface{}{"Id": "200", "Name": "Helloworld"})
 table.Print()
@@ -17,6 +18,11 @@ table.Print()
 ### Output
 
 ```bash
++----+------+
+| Id | Name |
++----+------+
++----+------+
+
 +-----+------------+
 | Id  | Name       |
 +-----+------------+
