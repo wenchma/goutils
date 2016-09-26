@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+
+	"github.com/wenchma/goutils"
 )
 
 func main() {
@@ -25,7 +27,11 @@ func main() {
 			fmt.Println(err)
 			return
 		}
-		fmt.Printf("%x\n", hash.Sum(nil))
+
+		table := goutils.NewTable([]string{"Algorithm", "Value"})
+		v := fmt.Sprintf("%x", hash.Sum(nil))
+		table.AddRow(map[string]interface{}{"Algorithm": "sha1", "Value": v})
+		table.Print()
 		return
 	} else if os.Args[1] == "sha1" {
 		hash := sha1.New()
@@ -39,7 +45,11 @@ func main() {
 			fmt.Println(err)
 			return
 		}
-		fmt.Printf("%x\n", hash.Sum(nil))
+
+		table := goutils.NewTable([]string{"Algorithm", "Value"})
+		v := fmt.Sprintf("%x", hash.Sum(nil))
+		table.AddRow(map[string]interface{}{"Algorithm": "sha1", "Value": v})
+		table.Print()
 		return
 	} else {
 		fmt.Println("Usage: checksum [md5|sha1] <file name>")
