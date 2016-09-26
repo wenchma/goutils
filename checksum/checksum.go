@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"crypto/sha1"
 	"fmt"
+	"hash"
 	"io"
 	"os"
 
@@ -12,47 +13,41 @@ import (
 
 func main() {
 	if len(os.Args) != 3 {
-		fmt.Println("Usage: checksum [md5|sha1] <file name>")
+		Usage()
 		return
 	}
-	if os.Args[1] == "md5" {
-		hash := md5.New()
-		f, err := os.Open(os.Args[2])
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		defer f.Close()
-		if _, err := io.Copy(hash, f); err != nil {
-			fmt.Println(err)
-			return
-		}
-
-		table := goutils.NewTable([]string{"Algorithm", "Value"})
-		v := fmt.Sprintf("%x", hash.Sum(nil))
-		table.AddRow(map[string]interface{}{"Algorithm": "sha1", "Value": v})
-		table.Print()
-		return
-	} else if os.Args[1] == "sha1" {
-		hash := sha1.New()
-		f, err := os.Open(os.Args[2])
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		defer f.Close()
-		if _, err := io.Copy(hash, f); err != nil {
-			fmt.Println(err)
-			return
-		}
-
-		table := goutils.NewTable([]string{"Algorithm", "Value"})
-		v := fmt.Sprintf("%x", hash.Sum(nil))
-		table.AddRow(map[string]interface{}{"Algorithm": "sha1", "Value": v})
-		table.Print()
-		return
-	} else {
-		fmt.Println("Usage: checksum [md5|sha1] <file name>")
+	v, err := CalculateSum(os.Args[1], os.Args[2])
+	if err != nil {
+		fmt.Println(err)
 		return
 	}
+	table := goutils.NewTable([]string{"Algorithm", "Value"})
+	table.AddRow(map[string]interface{}{"Algorithm": "sha1", "Value": v})
+	table.Print()
+	return
+}
+
+func Usage() {
+	fmt.Println("Usage: checksum [md5|sha1] <file name>")
+}
+
+func CalculateSum(algorithm, file string) (string, error) {
+	NewFuncs := map[string]func() hash.Hash {
+		"md5": md5.New,
+		"sha1": sha1.New,
+	}
+	NewFunc, ok := NewFuncs[algorithm]
+	if !ok {
+		return "", fmt.Errorf("Unsupported Hash Algorithm: %s", algorithm)
+	}
+	hash := NewFunc()
+	f, err := os.Open(file)
+	if err != nil {
+		return "", err
+	}
+	defer f.Close()
+	if _, err := io.Copy(hash, f); err != nil {
+		return "", err
+	}
+	return fmt.Sprintf("%x", hash.Sum(nil)), nil
 }
