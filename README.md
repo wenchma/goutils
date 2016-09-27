@@ -20,3 +20,8 @@ fmt.Println(Colorize("Default", ""))
 **Output example**:
 
 ![](./images/color-print.jpg)
+
+
+## Usage for checksum
+
+[checksum usage](./checksum/README.md)
